@@ -18,6 +18,8 @@ get_base_dir() {
 	CONFDIR='$BASEDIR/CONFDIR'
 }
 
+read -p "Ingrese un numero: "
+echo "El numero ingresado es:" $REPLY
 get_base_dir
 echo $BASEDIR
 echo $CONFDIR

@@ -445,8 +445,7 @@ function moverArchivos() {
 
     moverArchivo "$GRUPO/asociados.mae" "$GRUPO/$MAEDIR" "444"
     moverArchivo "$GRUPO/super.mae" "$GRUPO/$MAEDIR" "444"
-    moverArchivo "$GRUPO/precios.mae" "$GRUPO/$MAEDIR" "444"
-    moverArchivo "$GRUPO/um.mae" "$GRUPO/$MAEDIR" "444"
+    moverArchivo "$GRUPO/um.tab" "$GRUPO/$MAEDIR" "444"
 
     moverArchivo "$GRUPO/initializer.sh" "$GRUPO/$BINDIR" "775"
 
@@ -520,8 +519,7 @@ function detectarInstalacion {
                 "$GRUPO/$BINDIR/listener.sh"
                 "$GRUPO/$MAEDIR/asociados.mae"
                 "$GRUPO/$MAEDIR/super.mae"
-                "$GRUPO/$MAEDIR/precios.mae"
-                "$GRUPO/$MAEDIR/um.mae"
+                "$GRUPO/$MAEDIR/um.tab"
                )
 
     for archivo in ${archivosAVerificar[*]}

@@ -24,17 +24,6 @@ ACEPDIR="aceptadas"
 INFODIR="informes"
 RECHDIR="rechazados"
 
-# Inicio - ver si hay que borrar
-INICIARU="" #Usuario que movio el archivo Iniciar
-INICIARF="" #Fecha en la que se que movio el archivo Iniciar
-DETECTARU="" #Usuario que movio el archivo Detectar
-DETECTARF="" #Fecha en la que se que movio el archivo Detectar
-SUMARU="" #Usuario que movio el archivo Sumar
-SUMARF="" #Fecha en la que se que movio el archivo Sumar
-LISTARU="" #Usuario que movio el archivo Listar
-LISTARF="" #Fecha en la que se que movio el archivo Listar
-# Fin - ver si hay que borrar
-
 function toLower() {
     echo $1 | tr "[:upper:]" "[:lower:]"
 }
@@ -78,15 +67,15 @@ function crearDirectorio() {
 }
 
 function terminosCondiciones() {
-    echo "****************************************************************************"
-    echo "* TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08 *"
+    echo "***************************************************************************"
+    echo "*     TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08     *"
     loguear "I" "TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08"
-    echo "****************************************************************************"
+    echo "***************************************************************************"
     loguear "I" "Al instalar TP SO7508 Primer Cuatrimestre 2014 UD. expresa estar en un todo de acuerdo con los términos y condiciones del \"ACUERDO DE LICENCIA DE SOFTWARE\" incluido en este paquete."
-    echo "* Al instalar TP SO7508 Primer Cuatrimestre 2014 UD. expresa estar en un todo de acuerdo *"
-    echo "* con los términos y condiciones del \"ACUERDO DE LICENCIA DE    *"
-    echo "* SOFTWARE\" incluido en este paquete.                           *"
-    echo "*****************************************************************"
+    echo "* Al instalar TP SO7508 Primer Cuatrimestre 2014 UD. expresa estar en un  *"
+    echo "* todo de acuerdo  con los términos y condiciones del \"ACUERDO DE         *"
+    echo "* LICENCIA DE SOFTWARE\" incluido en este paquete.                         *"
+    echo "***************************************************************************"
     echoAndLog "I" "Acepta? (s/n): "
 
     read respuesta
@@ -346,10 +335,9 @@ function definirDirRechazados() {
 }
 
 function mostrarParametros() {
-    echo "********************************************************"
-    echo -n "* "
+    echo "**********************************************************"
     echoAndLog "I" "Parámetros de Instalación del paquete  Consultar"
-    echo "********************************************************"
+    echo "**********************************************************"
     echoAndLog "I" "Directorio de trabajo: $GRUPO"
     echoAndLog "I" "Directorio de configuración: $CONFDIR"
     echoAndLog "I" "Directorio de datos maestros: $MAEDIR"
@@ -460,33 +448,15 @@ function moverArchivos() {
     moverArchivo "$GRUPO/precios.mae" "$GRUPO/$MAEDIR" "444"
     moverArchivo "$GRUPO/um.mae" "$GRUPO/$MAEDIR" "444"
 
-    
-
     moverArchivo "$GRUPO/initializer.sh" "$GRUPO/$BINDIR" "775"
-    #if [ $? -eq 0 ]; then
-    #    INICIARU=$USER
-    #    INICIARF=`date +"%F %T"`
-    #fi
 
     copiarArchivo "$GRUPO/logging.sh" "$GRUPO/$CONFDIR" "775"
 
     moverArchivo "$GRUPO/logging.sh" "$GRUPO/$BINDIR" "775"
-    #if [ $? -eq 0 ]; then
-    #    LISTARU=$USER
-    #    LISTARF=`date +"%F %T"`
-    #fi
 
     moverArchivo "$GRUPO/$INSTDIR/mover.sh" "$GRUPO/$BINDIR" "775"
-    #if [ $? -eq 0 ]; then
-    #    SUMARU=$USER
-    #    SUMARF=`date +"%F %T"`
-    #fi
 
     moverArchivo "$GRUPO/$INSTDIR/obtenerpid.sh" "$GRUPO/$BINDIR" "775"
-    #if [ $? -eq 0 ]; then
-    #    DETECTARU=$USER
-    #    DETECTARF=`date +"%F %T"`
-    #fi
 
     moverArchivo "$GRUPO/$INSTDIR/start.sh" "$GRUPO/$BINDIR" "775"
     moverArchivo "$GRUPO/$INSTDIR/stop.sh" "$GRUPO/$BINDIR" "775"
@@ -497,7 +467,7 @@ function leerConfiguracion() {
     if [ -f $CONFFILE ]; then
         GRUPO=`grep "GRUPO" $CONFFILE | cut -s -f2 -d'='`    
         CONFDIR=`grep "CONFDIR" $CONFFILE | cut -s -f2 -d'='`    
-        DATAMAE=`grep "DATAMAE" $CONFFILE | cut -s -f2 -d'='`  
+        MAEDIR=`grep "MAEDIR" $CONFFILE | cut -s -f2 -d'='`  
         BINDIR=`grep "BINDIR" $CONFFILE | cut -s -f2 -d'='`    
         NOVEDIR=`grep "NOVEDIR" $CONFFILE | cut -s -f2 -d'='`    
         DATASIZE=`grep "DATASIZE" $CONFFILE | cut -s -f2 -d'='`    
@@ -507,21 +477,13 @@ function leerConfiguracion() {
         ACEPDIR=`grep "ACEPDIR" $CONFFILE | cut -s -f2 -d'='`
         INFODIR=`grep "ACEPDIR" $CONFFILE | cut -s -f2 -d'='`
         RECHDIR=`grep "RECHDIR" $CONFFILE | cut -s -f2 -d'='`
-        #INICIARU=`grep "INICIARU" $CONFFILE | cut -s -f2 -d'='`    
-        #INICIARF=`grep "INICIARF" $CONFFILE | cut -s -f2 -d'='`    
-        #DETECTARU=`grep "DETECTARU" $CONFFILE | cut -s -f2 -d'='`    
-        #DETECTARF=`grep "DETECTARF" $CONFFILE | cut -s -f2 -d'='`    
-        #SUMARU=`grep "SUMARU" $CONFFILE | cut -s -f2 -d'='`    
-        #SUMARF=`grep "SUMARF" $CONFFILE | cut -s -f2 -d'='`    
-        #LISTARU=`grep "LISTARU" $CONFFILE | cut -s -f2 -d'='`    
-        #LISTARF=`grep "LISTARF" $CONFFILE | cut -s -f2 -d'='`    
     fi
 }
 
 function guardarConfiguracion() {
     echo "GRUPO=$GRUPO=$USER=`date +"%F %T"`" > $CONFFILE    
     echo "CONFDIR=$CONFDIR=$USER=`date +"%F %T"`" >> $CONFFILE
-    echo "DATAMAE=$MAEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "MAEDIR=$MAEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "BINDIR=$BINDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "NOVEDIR=$NOVEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "DATASIZE=$DATASIZE=$USER=`date +"%F %T"`" >> $CONFFILE
@@ -531,14 +493,6 @@ function guardarConfiguracion() {
     echo "ACEPDIR=$ACEPDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "INFODIR=$INFODIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "RECHDIR=$RECHDIR=$USER=`date +"%F %T"`" >> $CONFFILE
-    #echo "INICIARU=$INICIARU" >> $CONFFILE
-    #echo "INICIARF=$INICIARF" >> $CONFFILE
-    #echo "DETECTARU=$DETECTARU" >> $CONFFILE
-    #echo "DETECTARF=$DETECTARF" >> $CONFFILE
-    #echo "SUMARU=$SUMARU" >> $CONFFILE
-    #echo "SUMARF=$SUMARF" >> $CONFFILE
-    #echo "LISTARU=$LISTARU" >> $CONFFILE
-    #echo "LISTARF=$LISTARF" >> $CONFFILE
 }
 
 
@@ -556,6 +510,7 @@ function detectarInstalacion {
     unset noinstalados   
     
     archivosAVerificar=(    "$GRUPO/$BINDIR/initializer.sh"
+                "$GRUPO/$CONFDIR/logging.sh"
                 "$GRUPO/$BINDIR/logging.sh"
                 "$GRUPO/$BINDIR/mover.sh"
                 "$GRUPO/$BINDIR/obtenerpid.sh"
@@ -598,8 +553,8 @@ function mostrarComponentesInstalados() {
     detectarInstalacion
 
     echo "*********************************************************************" 
-    echo "*   TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08 *"
-    loguear "I" "Sistema Consultar Copyright SisOp (c)2011"
+    echo "*  TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08  *"
+    loguear "I" "TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08"
     echo "*********************************************************************"
     
     if [ $cantInst -gt 0 ]; then
@@ -672,8 +627,7 @@ crearDirectorios
 moverArchivos
 guardarConfiguracion
 mostrarComponentesInstalados
-echo "********************************************************" 
-echo -n "* "
+echo "********************************************************************************************************"
 echoAndLog "I" "Fin del proceso de instalacion TP SO7508 Primer Cuatrimestre 2014. Tema D Copyright © Grupo 08"
-echo "********************************************************" 
+echo "********************************************************************************************************" 
 exit $?

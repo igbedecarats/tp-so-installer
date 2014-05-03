@@ -493,18 +493,18 @@ function leerConfiguracion() {
 }
 
 function guardarConfiguracion() {
-    echo "CURRDIR=$GRUPO" > $CONFFILE    
-    echo "CONFDIR=$CONFDIR" >> $CONFFILE
-    echo "DATAMAE=$MAEDIR" >> $CONFFILE
-    echo "BINDIR=$BINDIR" >> $CONFFILE
-    echo "NOVEDIR=$NOVEDIR" >> $CONFFILE
-    echo "DATASIZE=$DATASIZE" >> $CONFFILE
-    echo "LOGDIR=$LOGDIR" >> $CONFFILE
-    echo "LOGEXT=$LOGEXT" >> $CONFFILE
-    echo "MAXLOGSIZE=$LOGSIZE" >> $CONFFILE
-    echo "ACEPDIR=$ACEPDIR" >> $CONFFILE
-    echo "INFODIR=$INFODIR" >> $CONFFILE
-    echo "RECHDIR=$RECHDIR" >> $CONFFILE
+    echo "CURRDIR=$GRUPO=$USER=`date +"%F %T"`" > $CONFFILE    
+    echo "CONFDIR=$CONFDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "DATAMAE=$MAEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "BINDIR=$BINDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "NOVEDIR=$NOVEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "DATASIZE=$DATASIZE=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "LOGDIR=$LOGDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "LOGEXT=$LOGEXT=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "MAXLOGSIZE=$LOGSIZE=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "ACEPDIR=$ACEPDIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "INFODIR=$INFODIR=$USER=`date +"%F %T"`" >> $CONFFILE
+    echo "RECHDIR=$RECHDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     #echo "INICIARU=$INICIARU" >> $CONFFILE
     #echo "INICIARF=$INICIARF" >> $CONFFILE
     #echo "DETECTARU=$DETECTARU" >> $CONFFILE

@@ -453,13 +453,18 @@ function moverArchivos() {
 
     moverArchivo "$GRUPO/logging.sh" "$GRUPO/$BINDIR" "775"
 
-    moverArchivo "$GRUPO/$INSTDIR/mover.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/mover.sh" "$GRUPO/$BINDIR" "775"
 
-    moverArchivo "$GRUPO/$INSTDIR/obtenerpid.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/obtenerpid.sh" "$GRUPO/$BINDIR" "775"
 
-    moverArchivo "$GRUPO/$INSTDIR/start.sh" "$GRUPO/$BINDIR" "775"
-    moverArchivo "$GRUPO/$INSTDIR/stop.sh" "$GRUPO/$BINDIR" "775"
-    moverArchivo "$GRUPO/$INSTDIR/raiting.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/start.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/stop.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/raiting.sh" "$GRUPO/$BINDIR" "775"
+
+    moverArchivo "$GRUPO/listener.sh" "$GRUPO/$BINDIR" "775"
+
+    moverArchivo "$GRUPO/reporting.pl" "$GRUPO/$BINDIR" "775"
+
 }
 
 function leerConfiguracion() {
@@ -517,6 +522,7 @@ function detectarInstalacion {
                 "$GRUPO/$BINDIR/stop.sh"
                 "$GRUPO/$BINDIR/raiting.sh"
                 "$GRUPO/$BINDIR/listener.sh"
+                "$GRUPO/$BINDIR/reporting.pl"
                 "$GRUPO/$MAEDIR/asociados.mae"
                 "$GRUPO/$MAEDIR/super.mae"
                 "$GRUPO/$MAEDIR/um.tab"

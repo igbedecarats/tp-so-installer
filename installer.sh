@@ -428,6 +428,28 @@ function moverArchivo() {
     fi
 }
 
+function copiarArchivo() {
+    if [ -f "$2/${1##*/}" ]; then
+    return 2
+    fi
+
+    if [ ! -f $1 ]; then 
+        loguear "E" "200:Archivo inexistente: ${1##*/}" 
+        return 1
+    elif [ ! -d $2 ]; then
+        loguear "E" "200:Directorio inexistente: $2"
+        return 1
+    else
+        cp $1 $2 2>/dev/null
+        if [ $? -ne 0 ]; then
+            loguear "E" "210:No se pudo copiar el archivo: ${1##*/}"
+            return 1
+        else
+            chmod "$3" "$2/${1##*/}" 2>/dev/null
+        fi
+    fi
+}
+
 # TODO - Ver qué archivos mover
 function moverArchivos() {
     echo "Moviendo archivos..."
@@ -438,13 +460,17 @@ function moverArchivos() {
     moverArchivo "$GRUPO/precios.mae" "$GRUPO/$MAEDIR" "444"
     moverArchivo "$GRUPO/um.mae" "$GRUPO/$MAEDIR" "444"
 
+    
+
     moverArchivo "$GRUPO/initializer.sh" "$GRUPO/$BINDIR" "775"
     #if [ $? -eq 0 ]; then
     #    INICIARU=$USER
     #    INICIARF=`date +"%F %T"`
     #fi
 
-    moverArchivo "$GRUPO/loggin.sh" "$GRUPO/$BINDIR" "775"
+    copiarArchivo "$GRUPO/logging.sh" "$GRUPO/$CONFDIR" "775"
+
+    moverArchivo "$GRUPO/logging.sh" "$GRUPO/$BINDIR" "775"
     #if [ $? -eq 0 ]; then
     #    LISTARU=$USER
     #    LISTARF=`date +"%F %T"`
@@ -469,7 +495,7 @@ function moverArchivos() {
 
 function leerConfiguracion() {
     if [ -f $CONFFILE ]; then
-        GRUPO=`grep "CURRDIR" $CONFFILE | cut -s -f2 -d'='`    
+        GRUPO=`grep "GRUPO" $CONFFILE | cut -s -f2 -d'='`    
         CONFDIR=`grep "CONFDIR" $CONFFILE | cut -s -f2 -d'='`    
         DATAMAE=`grep "DATAMAE" $CONFFILE | cut -s -f2 -d'='`  
         BINDIR=`grep "BINDIR" $CONFFILE | cut -s -f2 -d'='`    
@@ -493,7 +519,7 @@ function leerConfiguracion() {
 }
 
 function guardarConfiguracion() {
-    echo "CURRDIR=$GRUPO=$USER=`date +"%F %T"`" > $CONFFILE    
+    echo "GRUPO=$GRUPO=$USER=`date +"%F %T"`" > $CONFFILE    
     echo "CONFDIR=$CONFDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "DATAMAE=$MAEDIR=$USER=`date +"%F %T"`" >> $CONFFILE
     echo "BINDIR=$BINDIR=$USER=`date +"%F %T"`" >> $CONFFILE
@@ -527,9 +553,8 @@ function detectarInstalacion {
     cantInst=0
     cantNoInst=0
     unset instalados
-    unset noinstalados
+    unset noinstalados   
     
-    cp $GRUPO/logging.sh $CONFDIR/logging.sh
     archivosAVerificar=(    "$GRUPO/$BINDIR/initializer.sh"
                 "$GRUPO/$BINDIR/logging.sh"
                 "$GRUPO/$BINDIR/mover.sh"

@@ -529,8 +529,8 @@ function detectarInstalacion {
     unset instalados
     unset noinstalados
     
+    cp $GRUPO/logging.sh $CONFDIR/logging.sh
     archivosAVerificar=(    "$GRUPO/$BINDIR/initializer.sh"
-                "$GRUPO/$CONFDIR/logging.sh"
                 "$GRUPO/$BINDIR/logging.sh"
                 "$GRUPO/$BINDIR/mover.sh"
                 "$GRUPO/$BINDIR/obtenerpid.sh"

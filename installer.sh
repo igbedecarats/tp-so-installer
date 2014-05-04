@@ -465,6 +465,8 @@ function moverArchivos() {
 
     moverArchivo "$GRUPO/reporting.pl" "$GRUPO/$BINDIR" "775"
 
+    moverArchivo "$GRUPO/masterlist.sh" "$GRUPO/$BINDIR" "775"
+
 }
 
 function leerConfiguracion() {
@@ -521,6 +523,7 @@ function detectarInstalacion {
                 "$GRUPO/$BINDIR/start.sh"
                 "$GRUPO/$BINDIR/stop.sh"
                 "$GRUPO/$BINDIR/raiting.sh"
+                "$GRUPO/$BINDIR/masterlist.sh"
                 "$GRUPO/$BINDIR/listener.sh"
                 "$GRUPO/$BINDIR/reporting.pl"
                 "$GRUPO/$MAEDIR/asociados.mae"

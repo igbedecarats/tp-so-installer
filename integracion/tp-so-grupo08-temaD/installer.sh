@@ -457,7 +457,7 @@ function moverArchivos() {
 
     moverArchivo "$GRUPO/start.sh" "$GRUPO/$BINDIR" "775"
     moverArchivo "$GRUPO/stop.sh" "$GRUPO/$BINDIR" "775"
-    moverArchivo "$GRUPO/raiting.sh" "$GRUPO/$BINDIR" "775"
+    moverArchivo "$GRUPO/rating.sh" "$GRUPO/$BINDIR" "775"
 
     moverArchivo "$GRUPO/listener.sh" "$GRUPO/$BINDIR" "775"
 
@@ -520,7 +520,7 @@ function detectarInstalacion {
                 "$GRUPO/$BINDIR/mover.sh"
                 "$GRUPO/$BINDIR/start.sh"
                 "$GRUPO/$BINDIR/stop.sh"
-                "$GRUPO/$BINDIR/raiting.sh"
+                "$GRUPO/$BINDIR/rating.sh"
                 "$GRUPO/$BINDIR/masterlist.sh"
                 "$GRUPO/$BINDIR/listener.sh"
                 "$GRUPO/$BINDIR/reporting.pl"

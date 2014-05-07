@@ -19,7 +19,7 @@ existe ()
 	then
 		echo "No existe el $3 $2 ($1)."
 		"$GRUPO/$CONFDIR"/logging.sh initializer "No existe el $3 $2 ($1)." ERR
-		exit 1
+		return 1
 	fi # [ ! -e "$1" ]
 }
 
@@ -34,7 +34,7 @@ permiso_rw ()
 		then
 			echo "No fue posible corregir los permisos de lectura / escritura en el $3 $2 ($1), debe volver a instalar."
 			"$GRUPO/$CONFDIR"/logging.sh initializer "No fue posible corregir los permisos de lectura / escritura en el $3 $2 ($1)." ERR
-			exit 1
+			return 1
 		fi # [ $? -eq 1 ]
 	fi # [ ! -r "$1" ] || [ ! -w "$1" ]
 }
@@ -50,7 +50,7 @@ permiso_exe ()
 		then
 			echo "No fue posible corregir los permisos de ejecucion en el $3 $2 ($1), debe volver a instalar."
 			"$GRUPO/$CONFDIR"/logging.sh initializer "No fue posible corregir los permisos de ejecucion en el $3 $2 ($1)." ERR
-			exit 1
+			return 1
 		fi # [ $? -eq 1 ]
 	fi # [ ! -x "$1" ]
 }
@@ -62,7 +62,7 @@ if [ $# -gt 0 ]
 then
 	echo " Initializer no recibe parametros, volver a ejecutar."
         "$GRUPO/$CONFDIR"/logging.sh initializer " Initializer no recibe parametros." ERR
-	exit 1
+	return 1
 fi # [ $# -gt 0 ]
 
 # Verifico ambiente inicializado
@@ -71,14 +71,14 @@ if [ -n "$RETAIL_ENV" ] && [ $RETAIL_ENV == "Loaded" ]
 then
 	echo "El ambiente ya ha sido inicializado, para ejecutar el Listener utilize el comando Start."
 	"$GRUPO/$BINDIR"/logging.sh initializer "El ambiente ya ha sido inicializado." WAR
-	exit 1
+	return 1
 fi # [ -n "$RETAIL_ENV" ] && [ $RETAIL_ENV == "Loaded" ]
 
 # Verifico instalacion completa
 if [ ! -d "$GRUPO/$CONFDIR" ]
 then
 	echo "No existe el directorio de configuracion $CONFDIR, volver a instalar."
-	exit 1
+	return 1
 fi # [ ! -d "$GRUPO/$CONFDIR" ]
 
 # configFile= `"$GRUPO/$CONFDIR/installer.conf"`
@@ -87,7 +87,7 @@ if [ ! -f "$GRUPO/$CONFDIR/installer.conf" ]
 then
 	echo " No se encuenta el archivo de configuracion, volver a instalar."
 	"$GRUPO/$CONFDIR"/logging.sh initializer " No se encuenta el archivo de configuracion, volver a instalar." INFO		
-	exit 1	
+	return 1	
 fi # [ ! -f "$GRUPO/$CONFDIR/installer.conf" ]
 
 # Busco variables de ambiente en archivo de conf y las exporto 
@@ -97,20 +97,20 @@ do
 	if [ -z "$linea" ] 
 	then
 		echo "Falta la variable $i en el archivo de configuracion, debe correr el instalador otra vez."
-		exit 1
+		return 1
 	fi
 
 	if [ -z "$(echo "$linea" | grep '=')" ]
 	then
 		echo "La entrada de $i es invalida en el archivo de configuracion, debe correr el instalador nuevamente."
-		exit 1
+		return 1
 	fi
 		
 	valor=$(echo "$linea" | cut -f2 -d '=')
 	if [ -z "$valor" ]
 	then
 		echo "La variable $i tiene un valor nulo, verifique la configuracion de xxxxx"
-		exit 1
+		return 1
 	fi
 	
 	export $i=$valor
@@ -129,7 +129,7 @@ done
 #then
 #	echo "La extension $LOGEXT contiene caracteres invalidos, solo se admiten alfanumericos, vuelva a correr el instalador."
 #	"$GRUPO/$CONFDIR"/logging.sh initializer "La extension $LOGEXT contiene caracteres invalidos, solo se admiten alfanumericos." ERR
-#	exit 1
+#	return 1
 #fi
 
 # Verifico valores validos
@@ -140,7 +140,7 @@ do
 	then
 		echo "El campo $i ($valor) deberia ser numerico, debe ingresar la cantidad de MegaBytes cuando pregunta el instalador."
 		"$GRUPO/$CONFDIR"/logging.sh initializer "El campo $i ($valor) deberia ser numerico, debe ingresar la cantidad de MegaBytes." ERR
-		exit 1
+		return 1
 	fi
 done
 
@@ -201,4 +201,4 @@ export RETAIL_ENV=Loaded
 # Loggeo el fin del comando 
 $GRUPO/$BINDIR/logging.sh initializer " Se realizo correctamente la inicializacion del programa ." INFO
 
-exit 0
+return 0

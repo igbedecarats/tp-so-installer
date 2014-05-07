@@ -24,6 +24,13 @@
 #	Parámetro 2 (obligatorio): mensaje
 #	Parámetro 3 (opcional): tipo de mensaje (INFO|WAR|ERR default INFO)
 
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+CONFDIR=conf
+LOGDIR=`grep '^LOGDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+LOGEXT=`grep '^LOGEXT' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+MAXLOGSIZE=`grep '^MAXLOGSIZE' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
 
 # Función que maneja el tamaño de los archivos de log
 # PRE: Debe existir la ruta y el archivo del log

@@ -5,12 +5,15 @@
 # 
 
 # Verifico ambiente inicializado
-if [ -n "$RETAIL_ENV" ] || [ $RETAIL_ENV != "Loaded" ]
-then
-	echo "El ambiente no ha sido inicializado previamente, debe inicializarlo mediante el comando initializer."
-	exit 1
-fi
+#if [ -n "$RETAIL_ENV" ] || [ $RETAIL_ENV != "Loaded" ]
+#then
+#	echo "El ambiente no ha sido inicializado previamente, debe inicializarlo mediante el comando initializer."
+#	exit 1
+#fi
 
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
 
 PID="$(ps -u $EUID | grep 'listener.sh' | awk '{ print $1 }')"
 if [ ! -z "$PID" ]

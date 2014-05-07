@@ -145,7 +145,7 @@ do
 done
 
 # Verifico existencia de los comandos y permisos
-for i in mover.sh logging.sh initializer.sh start.sh stop.sh listener.sh masterlist.sh raiting.sh reporting.pl
+for i in mover.sh logging.sh initializer.sh start.sh stop.sh listener.sh masterlist.sh rating.sh reporting.pl
 do
 	existe "$GRUPO/$BINDIR/$i" "$i" "archivo"
 	permiso_exe "$GRUPO/$BINDIR/$i" "$i" "archivo"

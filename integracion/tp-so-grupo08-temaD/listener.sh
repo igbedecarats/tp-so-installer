@@ -30,20 +30,22 @@
 #		DORMIR(MINUTOS)
 ####################################################################################################################################################	
 
-#$CONFIGURACION=conf/installer.conf
-#MAEDIR=`grep '^MAEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-#NOVEDIR=`grep '^NOVEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-#RECHDIR=`grep '^RECHDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-#ACEPDIR=`grep '^ACEPDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-#BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+MAEDIR=`grep '^MAEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+NOVEDIR=`grep '^NOVEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+RECHDIR=`grep '^RECHDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+ACEPDIR=`grep '^ACEPDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
 
 
 #################################################################################FALTA EL WHILE TRUE
 AUX=1
-$GRUPO/$BINDIR/logging.sh listener  " Cilco Nro $AUX." INFO
+echo "echo $GRUPO/$BINDIR/logging.sh"
+$GRUPO/$BINDIR/logging.sh listener  " Ciclo Nro $AUX." INFO
 
 
-while true
+while true; do
 	for file in $(ls -1 $GRUPO/$NOVEDIR )
 	do 
 		if !(file $GRUPO/$NOVEDIR/$file | grep '.*text, with CRLF line terminators$') #FILTRA ARCHIVOS QUE SEAN SOLO DE TEXTO
@@ -120,9 +122,9 @@ while true
 		#masterlistID=$GRUPO/$BINDIR/obtenerpid masterlist
 		ratingID="$(ps -u $EUID | grep 'rating.sh' | awk '{ print $1 }')"
 		#ratingID=$GRUPO/$BINDIR/obtenerpid rating
-		if !(masterlistID) && !(ratingID)  #if (no se esta corriendo MASTERLIST and no se esta corriendo RATING)
+		if !($masterlistID) && !($ratingID)  #if (no se esta corriendo MASTERLIST and no se esta corriendo RATING)
 			then 
-			"$GRUPO/$BINDIR"/masterlist &
+			"$GRUPO/$BINDIR"/masterlist.sh &
 			PID=$!
 			$GRUPO/$BINDIR/logging.sh listener  "Masterlist corriendo bajo el PID: $PID"
 			echo "Masterlist corriendo bajo el PID: $PID"
@@ -137,7 +139,7 @@ while true
 		#masterlistID=$GRUPO/$BINDIR/obtenerpid masterlist
 		ratingID="$(ps -u $EUID | grep 'rating.sh' | awk '{ print $1 }')"
 		#ratingID=$GRUPO/$BINDIR/obtenerpid rating
-		if !(masterlistID) && !(ratingID)  #if (no se esta corriendo MASTERLIST and no se esta corriendo RATING)
+		if !($masterlistID) && !($ratingID)  #if (no se esta corriendo MASTERLIST and no se esta corriendo RATING)
 			then 
 			"$GRUPO/$BINDIR"/rating.sh &
 			PID=$!

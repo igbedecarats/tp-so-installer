@@ -30,13 +30,18 @@
 # Loggeo el inicio del comando 
 # $GRUPO/$BINDIR/logging.sh mover " Inicio mover." INFO
 
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+
+
 # Valido que el ambiente haya sido correctamente inicializado
-if [ -z "$RETAIL_ENV" ] # Si el ambiente fue inicializado, RETAIL_ENV tiene el valor "Loaded"
-then
-	echo "El ambiente no ha sido correctamente inicializado."
-	echo "No será posible utilizar el comando mover."
-	exit 1
-fi # [ -z "$RETAIL_ENV" ]
+#if [ -z "$RETAIL_ENV" ] # Si el ambiente fue inicializado, RETAIL_ENV tiene el valor "Loaded"
+#then
+#	echo "El ambiente no ha sido correctamente inicializado."
+#	echo "No será posible utilizar el comando mover."
+#	exit 1
+#fi # [ -z "$RETAIL_ENV" ]
 
 # Valido cantidad de parametros permitidos (2-3)
 if [ $# -gt 3 -o $# -lt 2 ]; then

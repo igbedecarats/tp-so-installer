@@ -1,13 +1,20 @@
 #!usr/local/bin/perl
 use Switch;
 
+## begin - TODO : ver como tomar los valores de los dirs
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+MAEDIR=`grep '^MAEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+INFODIR=`grep '^INFODIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+
 $dir_informes = '$GRUPO/$INFODIR/listas/';
 $dir_maestros = '$GRUPO/$MAEDIR/';
 %ids_prov_supers;
 %supers_elegidos;
 %ids_users;
 %users_elegidos;
-
+## end - TODO : ver como tomar los valores de los dirs
 
 #retorna en un string el nombre de supermercado y provincia separados por un guion para el super_id pasado
 sub get_super_prov

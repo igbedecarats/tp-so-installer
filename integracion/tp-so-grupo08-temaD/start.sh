@@ -7,13 +7,17 @@
 #   Parámetro 1 (obligatorio): comando a iniciar
 
 # Verifico ambiente inicializado
-if [ -n "$RETAIL_ENV" ] || [ $RETAIL_ENV != "Loaded" ]
-then
-	echo "El ambiente no ha sido inicializado previamente, debe inicializarlo mediante el comando initializer."
-	exit 1
-fi 
+#if [ -n "$RETAIL_ENV" ] || [ $RETAIL_ENV != "Loaded" ]
+#then
+#	echo "El ambiente no ha sido inicializado previamente, debe inicializarlo mediante el comando initializer."
+#	exit 1
+#fi 
 
 COMANDO=$1
+
+CONFIGURACION=../conf/installer.conf
+GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
 
 if [ $# -ne 1 ]
 then

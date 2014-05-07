@@ -5,8 +5,8 @@
 #
 # Opciones y Parámetros: No recibe parametros
 
-CONFIGURACION=../conf/installer.conf
-valor=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+lin=$(grep "GRUPO" "../conf/installer.conf")
+valor=$(echo "$lin" | cut -f2 -d '=')
 
 export GRUPO=$valor
 

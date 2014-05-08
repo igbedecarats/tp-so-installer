@@ -2,14 +2,15 @@
 use Switch;
 
 ## begin - TODO : ver como tomar los valores de los dirs
-CONFIGURACION=../conf/installer.conf
-GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-MAEDIR=`grep '^MAEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-INFODIR=`grep '^INFODIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
-BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+#CONFIGURACION=../conf/installer.conf
+#GRUPO=`grep '^GRUPO' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+#MAEDIR=`grep '^MAEDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+#INFODIR=`grep '^INFODIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
+#BINDIR=`grep '^BINDIR' $CONFIGURACION | sed 's-\(.*\)=\(.*\)=\(.*\)=\(.*\)-\2-g'`
 
-$dir_informes = '$GRUPO/$INFODIR/listas/';
-$dir_maestros = '$GRUPO/$MAEDIR/';
+$dir_informes = $ENV{'GRUPO'}."/".$ENV{'INFODIR'}."/";
+$dir_maestros = $ENV{'GRUPO'}."/".$ENV{'MAEDIR'}."/";
+
 %ids_prov_supers;
 %supers_elegidos;
 %ids_users;
@@ -50,7 +51,8 @@ sub get_super_prov
 sub salida_m_p
 {
 	%hash = @_;
-	open (TEMP, '>>$GRUPO/$INFODIR/temp');
+	$n_arch = $dir_informes."temp";
+	open (TEMP, '>>$n_arch');
 	foreach $clave (sort keys %hash)
 	{			
 		@array = @{$hash{$clave}};
@@ -74,7 +76,8 @@ sub salida_m_p
 sub salida_f
 {
 	%hash = @_;
-	open (TEMP, '>>$GRUPO/$INFODIR/temp');
+	$n_arch = $dir_informes."temp";
+	open (TEMP, '>>$n_arch');
 	foreach $clave (sort keys %hash)
 	{			
 		@array = @{$hash{$clave}};
@@ -92,7 +95,8 @@ sub salida_f
 sub salida_d
 {
 	%hash = @_;	
-	open (TEMP, '>>$GRUPO/$INFODIR/temp');
+	$n_arch = $dir_informes."temp";
+	open (TEMP, '>>$n_arch');
 	foreach $clave (sort keys %hash)
 	{
 		@array = @{$hash{$clave}};
@@ -243,8 +247,8 @@ sub salida_dp
 	my (%donde_comprar_cop, %precio_por_ref_cop, @array, @campos);
 	%donde_comprar_cop = &donde_comprar(@_[0], @_[1]);
 	%precio_por_ref_cop = &precio_por_referencia(@_[0]);
-
-	open (TEMP, '>>$GRUPO/$INFODIR/temp');
+	$n_arch = $dir_informes."temp";
+	open (TEMP, '>>$n_arch');
 	foreach $clave (sort keys %donde_comprar_cop)
 	{
 		@array = @{$donde_comprar_cop{$clave}};
@@ -300,7 +304,8 @@ sub salida_mp
 	my (%menor_precio_cop, %precio_por_ref_cop, @array, @campos);	
 	%menor_precio_cop = &menor_precio(@_[0], @_[1]);
 	%precio_por_ref_cop = &precio_por_referencia(@_[0]);
-	open (TEMP, '>>$GRUPO/$INFODIR/temp');
+	$n_arch = $dir_informes."temp";
+	open (TEMP, '>>$n_arch');
 	foreach $clave (sort keys %menor_precio_cop)
 	{
 		@array = @{$menor_precio_cop{$clave}};
@@ -481,16 +486,18 @@ sub imprimir_menu
 
 sub recorrer_listas_presupuestadas
 {
-	if (opendir(DIR, $dir_informes))		#abro el directorio para leer las listas presupuestadas por usuario
+	$n_dir = $dir_informes."listas/";
+	if (opendir(DIR, $n_dir))		#abro el directorio para leer las listas presupuestadas por usuario
 	{
 		@names_arch = readdir(DIR);
 		close(DIR);
-		open (TEMP, '>$GRUPO/$INFODIR/temp');
+		$n_arch = $dir_informes."temp";
+		open (TEMP, '>$n_arch');
 		close(TEMP);
 		foreach $name_arch (@names_arch)		#recorro todos los archivos del directorio 
 		{	
 			system('clear');
-			open (TEMP, '>$GRUPO/$INFODIR/temp');
+			open (TEMP, '>$n_arch');
 			if ($name_arch !~ /^\./ and $name_arch !~ /~$/)		#excluyo los archivos ocultos
 			{	
 				if ( ((@_[1] eq "u") and exists($users_elegidos{$name_arch})) or (@_[1] ne "u") )
@@ -509,7 +516,7 @@ sub recorrer_listas_presupuestadas
 						case "dp" {&salida_dp($name_arch, @_[1])}
 					}
 					print "\n";
-					open (TEMP, '>>$GRUPO/$INFODIR/temp');
+					open (TEMP, '>>$n_arch');
 					print TEMP "\n";
 					close (TEMP);
 				
@@ -519,7 +526,7 @@ sub recorrer_listas_presupuestadas
 					if ($guardar eq 's')
 					{
 						$new_name_arch = "info.".$name_arch;
-						$comando = "mv $GRUPO/$INFODIR/temp $GRUPO/$INFODIR/"."$new_name_arch";
+						$comando = "mv $n_arch $dir_informes"."$new_name_arch";
 						system($comando);
 					}
 					else
@@ -608,6 +615,7 @@ sub menu
 #&cargar_users;
 #&filtrar_users;
 &menu;
+
 
 
 
